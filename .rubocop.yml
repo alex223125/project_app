@@ -1,4 +1,5 @@
 # .rubocop.yml
+plugins: rubocop-rails
 AllCops:
   NewCops: enable
   Exclude:
