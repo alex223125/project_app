@@ -1,5 +1,7 @@
 # .rubocop.yml
-plugins: rubocop-rails
+plugins:
+  - rubocop-rails
+  - rubocop-rspec
 AllCops:
   NewCops: enable
   Exclude:

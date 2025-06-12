@@ -2,6 +2,13 @@
 
 ```bundle exec rubocop```
 
+### To run rubocop-rpsec
+
+```rubocop --plugin rubocop-rspec```
+
+### To run rubocop-rails
+
+```rubocop --plugin rubocop-rails```
 
 # README
 
