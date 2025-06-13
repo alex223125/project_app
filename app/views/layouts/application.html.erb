@@ -10,8 +10,9 @@
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
   </head>
 
+  <%= render "layouts/header"  %>
   <body>
-    <main class="container mx-auto mt-28 px-5 flex">
+    <main class="container mx-auto mt-28 px-5 flex justify-center">
       <%= yield %>
     </main>
   </body>

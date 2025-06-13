@@ -10,6 +10,10 @@
 
 ```rubocop --plugin rubocop-rails```
 
+### To precompile tailwind css
+
+```rake assets:precompile```
+
 # README
 
 This README would normally document whatever steps are necessary to get the

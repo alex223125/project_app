@@ -1,0 +1,10 @@
+<div id="<%= dom_id project %>">
+  <p class="my-5">
+    <strong class="block font-medium mb-1">Title:</strong>
+    <%= project.title %>
+  </p>
+  <p class="my-5">
+    <strong class="block font-medium mb-1">Status:</strong>
+    <%= Projects::StatusTypes[project.status] %>
+  </p>
+</div>

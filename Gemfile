@@ -46,6 +46,9 @@ gem "bootsnap", require: false
 
 gem "tailwindcss-ruby", "~> 3.0"
 gem "tailwindcss-rails", "~> 3.3.1"
+gem 'active_enum', '~> 1.0.0'
+gem 'simple_form'
+
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
