@@ -48,6 +48,7 @@ gem "tailwindcss-ruby", "~> 3.0"
 gem "tailwindcss-rails", "~> 3.3.1"
 gem 'active_enum', '~> 1.0.0'
 gem 'simple_form'
+gem 'factory_bot_rails'
 
 
 group :development, :test do
@@ -57,6 +58,7 @@ group :development, :test do
   gem 'rubocop-rails', require: false
   gem 'rubocop-rspec', require: false
   gem 'rspec-rails', '~> 7.0.0'
+  gem 'pry'
 end
 
 group :development do
