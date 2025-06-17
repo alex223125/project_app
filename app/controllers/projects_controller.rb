@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 class ProjectsController < ApplicationController
-  before_action :set_project, only: %i[ show edit update destroy ]
+  before_action :set_project, only: %i[show edit update destroy]
 
   # GET /projects or /projects.json
   def index
@@ -8,6 +10,7 @@ class ProjectsController < ApplicationController
 
   # GET /projects/1 or /projects/1.json
   def show
+    @comments = @project.comments
   end
 
   # GET /projects/new
@@ -16,33 +19,38 @@ class ProjectsController < ApplicationController
   end
 
   # GET /projects/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /projects or /projects.json
   def create
-    @project = Project.new(project_params)
+    service = Projects::Create.new(project_params)
+    service.call
 
     respond_to do |format|
-      if @project.save
-        format.html { redirect_to @project, notice: "Project was successfully created." }
-        format.json { render :show, status: :created, location: @project }
+      if service.errors.blank?
+        format.html { redirect_to service.project, notice: 'Project was successfully created.' }
       else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @project.errors, status: :unprocessable_entity }
+        format.html do
+          render :new, status: :unprocessable_entity, assigns: { project: service.project,
+                                                                 status_change_record: service.status_change_record }
+        end
       end
     end
   end
 
   # PATCH/PUT /projects/1 or /projects/1.json
   def update
+    service = Projects::Update.new(@project, project_params)
+    service.call
+
     respond_to do |format|
-      if @project.update(project_params)
-        format.html { redirect_to @project, notice: "Project was successfully updated." }
-        format.json { render :show, status: :ok, location: @project }
+      if service.errors.blank?
+        format.html { redirect_to service.project, notice: 'Project was successfully updated.' }
       else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @project.errors, status: :unprocessable_entity }
+        format.html do
+          render :edit, status: :unprocessable_entity, assigns: { project: service.project,
+                                                                  status_change_record: service.status_change_record }
+        end
       end
     end
   end
@@ -52,19 +60,20 @@ class ProjectsController < ApplicationController
     @project.destroy!
 
     respond_to do |format|
-      format.html { redirect_to projects_path, status: :see_other, notice: "Project was successfully destroyed." }
+      format.html { redirect_to projects_path, status: :see_other, notice: 'Project was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_project
-      @project = Project.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def project_params
-      params.require(:project).permit(:title, :status)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_project
+    @project = Project.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def project_params
+    params.require(:project).permit(:title, :status, :description)
+  end
 end
