@@ -16,3 +16,13 @@ AllCops:
     - "spec/spec_helper.rb"
 Style/Documentation:
   Enabled: false
+RSpec/NestedGroups:
+  Enabled: false
+RSpec/ExampleLength:
+  Enabled: false
+Rails/I18nLocaleTexts:
+  Enabled: false
+Metrics/MethodLength:
+  Enabled: false
+Rails/TransactionExitStatement:
+  Enabled: false
