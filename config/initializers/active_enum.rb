@@ -1,8 +1,9 @@
+# frozen_string_literal: true
+
 # Form helper integration
 # require 'active_enum/form_helpers/simple_form' # for SimpleForm
 
 ActiveEnum.setup do |config|
-
   # Extend classes to add enumerate method
   # config.extend_classes = [ ActiveRecord::Base ]
 
@@ -14,13 +15,12 @@ ActiveEnum.setup do |config|
 
   # Storage of values (:memory, :i18n)
   # config.storage = :memory
-
 end
 
 # ActiveEnum.define do
-# 
+#
 #   enum(:enum_name) do
 #     value 1 => 'Name'
 #   end
-# 
+#
 # end
