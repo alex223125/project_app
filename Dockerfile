@@ -1,7 +1,16 @@
 # syntax = docker/dockerfile:1
 
+
+# Throw-away build stage to reduce size of final image
+FROM base AS build
+
+# Install flowbite
+RUN apt-get update -qq && \
+   apt-get install --no-install-recommends -y npm && \
+   npm install flowbite
+
 # Make sure RUBY_VERSION matches the Ruby version in .ruby-version and Gemfile
-ARG RUBY_VERSION=3.0.0
+ARG RUBY_VERSION=3.1.0
 FROM registry.docker.com/library/ruby:$RUBY_VERSION-slim as base
 
 # Rails app lives here
@@ -13,6 +22,11 @@ ENV RAILS_ENV="production" \
     BUNDLE_PATH="/usr/local/bundle" \
     BUNDLE_WITHOUT="development"
 
+
+FROM node:22-alpine AS nodejs
+WORKDIR /app
+COPY package.json package-lock.json ./
+RUN npm install --production
 
 # Throw-away build stage to reduce size of final image
 FROM base as build
@@ -28,7 +42,7 @@ RUN bundle install && \
     bundle exec bootsnap precompile --gemfile
 
 # Copy application code
-COPY . .
+COPY --from=nodejs /app/node_modules ./node_modules
 
 # Precompile bootsnap code for faster boot times
 RUN bundle exec bootsnap precompile app/ lib/
