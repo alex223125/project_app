@@ -14,27 +14,20 @@
 
 ```rake assets:precompile```
 
-# README
+### Rubocop results 
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+```cassandraql
+project_app$ bundle exec rubocop -A
+Inspecting 58 files
+..........................................................
 
-Things you may want to cover:
+58 files inspected, no offenses detected
 
-* Ruby version
+```
 
-* System dependencies
+### Test results 
+```cassandraql
+Finished in 0.29108 seconds (files took 1.34 seconds to load)
+52 examples, 0 failures, 16 pending
 
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+```
