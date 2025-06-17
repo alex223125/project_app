@@ -1,11 +1,16 @@
-<%= simple_form_for(@project, url: projects_path, method: :post, class: "max-w-lg mx-auto") do |form| %>
-  <% if project.errors.any? %>
+<% path = @project.new_record? ? projects_path : project_path %>
+<% method = @project.new_record? ? :post : :patch %>
+<%= simple_form_for(@project, url: path, method: method, class: "max-w-lg mx-auto") do |form| %>
+  <% if @project.errors.any? || @status_change_record.try(:errors).try(:any?) %>
     <div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-md mt-3">
-      <h2><%= pluralize(project.errors.count, "error") %> prohibited this project from being saved:</h2>
+      <h2><%= pluralize(@project.errors.count, "error") %> prohibited this project from being saved:</h2>
+      <h2><%= pluralize(@status_change_record.errors.count, "error") %> prohibited this project from being saved:</h2>
 
       <ul class="list-disc ml-6">
-        <% project.errors.each do |error| %>
-          <li><%= error.full_message %></li>
+        <% [@project, @status_change_record].each do |entity| %>
+          <% entity.errors.each do |error| %>
+            <li><%= error.full_message %></li>
+          <% end %>
         <% end %>
       </ul>
     </div>
@@ -16,8 +21,13 @@
     <%= form.text_field :title, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" %>
   </div>
 
+  <div class="mb-5">
+    <%= form.label :description, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
+    <%= form.text_field :description, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" %>
+  </div>
+
   <div class="my-5">
-    <%= form.input :status, collection:  Projects::StatusTypes.to_select, input_html: {class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" } %>
+    <%= form.input :status, collection: Projects::StatusTypes.to_select, include_blank: false, input_html: {class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" } %>
   </div>
 
   <div class="flex flex-wrap gap-4">

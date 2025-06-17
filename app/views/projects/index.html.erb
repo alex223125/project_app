@@ -1,26 +1,42 @@
-<% content_for :title, "Projects" %>
+<div class="h-screen w-full dark:bg-gray-800">
 
-<div class="w-full">
   <% if notice.present? %>
     <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-md inline-block" id="notice"><%= notice %></p>
   <% end %>
 
-  <div class="flex justify-between items-center">
-    <h1 class="font-bold text-4xl">Projects</h1>
+  <div class="justify-between items-center">
+    <h1 class="font-bold text-4xl text-center">Projects</h1>
   </div>
 
-  <div id="projects" class="min-w-full">
+  <section class="flex flex-col justify-center max-w-7xl px-4 py-10 mx-auto sm:px-6">
     <% if @projects.any? %>
-      <% @projects.each do |project| %>
-        <%= render project %>
-        <p>
-          <%= link_to "Show this project", project, class: "ml-2 rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
-        </p>
-      <% end %>
+      <div class="grid grid-cols-2 sm:grid-cols-2 gap-4 px-1">
+        <% @projects.each do |project| %>
+            <div class="p-4 flex flex-col justify-between gap-2 border rounded-lg shadow-md bg-white dark:bg-gray-700 dark:border-gray-400/40">
+              <a class="text-xl font-semibold text-blue-700 hover:underline two-lines dark:text-blue-100" href="">
+                <%= project.title %>
+              </a>
+
+              <p class="text-gray-800 two-lines dark:text-gray-300">
+                A disconcerting rap song about murder featuring fake voices of renowned footballers Steven Gerrard
+                and
+                Jamie
+                Carragher, created by prisoner L20 Mazza, has become a sensation online.
+              </p>
+
+              <div class="flex items-center justify-between text-sm">
+                <%= link_to "Show this project", project, class: "text-blue-700 hover:underline dark:text-white" %>
+              </div>
+            </div>
+        <% end %>
+      </div>
     <% else %>
       <p class="text-center my-10">No projects found.</p>
     <% end %>
+  </section>
+  <div class="flex justify-center max-w-7xl px-4 py-10 mx-auto sm:px-6">
+    <%= link_to "New project", new_project_path,
+                class: "text-purple-700 hover:text-white border border-purple-700 hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-purple-400 dark:text-purple-400 dark:hover:text-white dark:hover:bg-purple-500 dark:focus:ring-purple-900" %>
   </div>
-  <br>
-  <%= link_to "New project", new_project_path, class: "text-purple-700 hover:text-white border border-purple-700 hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-purple-400 dark:text-purple-400 dark:hover:text-white dark:hover:bg-purple-500 dark:focus:ring-purple-900" %>
 </div>
+<br>
